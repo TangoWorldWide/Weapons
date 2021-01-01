@@ -92,6 +92,35 @@ public void ReadConfig()
 		
 		CloseHandle(kv);
 		
+		// Horrible unoptimized way to sort the menu items.
+		ArrayList itemList = new ArrayList(128);
+		for (int k = 0; k < sizeof(g_WeaponClasses); k++)
+		{
+			for (int f = (menuWeapons[langCounter][k].ItemCount - 1); f > 1; f--)
+			{
+				char buffer[128], display[64];
+				menuWeapons[langCounter][k].GetItem(f, buffer, sizeof(buffer), _, display, sizeof(display));
+				menuWeapons[langCounter][k].RemoveItem(f);
+
+				Format(buffer, sizeof(buffer), "%s;%s", display, buffer);
+				itemList.PushString(buffer);
+			}
+
+			SortADTArray(itemList, Sort_Ascending, Sort_String);
+
+			for (int s = 0; s < itemList.Length; s++)
+			{
+				char buffer[128], exploded[2][64];
+				itemList.GetString(s, buffer, sizeof(buffer));
+
+				ExplodeString(buffer, ";", exploded, sizeof(exploded), sizeof(exploded[]));
+				menuWeapons[langCounter][k].AddItem(exploded[1], exploded[0]);
+			}
+
+			itemList.Clear();
+		}
+		
+		delete itemList;
 		langCounter++;
 	}
 	
