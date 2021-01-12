@@ -187,7 +187,7 @@ public Action CommandWeaponSkins(int client, int args)
 			char sCommand[16];
 			GetCmdArg(0, sCommand, sizeof(sCommand));
 
-			if (StrEqual(command, "buyammo1"))
+			if (StrEqual(sCommand, "buyammo1"))
 				return Plugin_Handled;
 		}
 
@@ -225,7 +225,7 @@ public Action CommandKnife(int client, int args)
 			char sCommand[16];
 			GetCmdArg(0, sCommand, sizeof(sCommand));
 
-			if (StrEqual(command, "buyammo1"))
+			if (StrEqual(sCommand, "buyammo1"))
 				return Plugin_Handled;
 		}
 
