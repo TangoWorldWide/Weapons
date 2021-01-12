@@ -88,6 +88,7 @@ public void OnPluginStart()
 	g_Cvar_GracePeriod 			= CreateConVar("sm_weapons_grace_period", 			"0", 				"Grace period in terms of seconds counted after round start for allowing the use of !ws command. 0 means no restrictions");
 	g_Cvar_InactiveDays 			= CreateConVar("sm_weapons_inactive_days", 			"30", 				"Number of days before a player (SteamID) is marked as inactive and his data is deleted. (0 or any negative value to disable deleting)");
 	g_Cvar_AnySkinAnyWeapon 		= CreateConVar("sm_weapons_any_skin_any_weapon", 	"1", 				"Enable/Disable allowing any skin on any weapon as opposed to only allowing intended skins.");
+	g_Cvar_UseBuyAmmoCommands 		= CreateConVar("sm_weapons_use_buy_ammo_commands", 	"0", 				"Enable/Disable opening the weapon skins/knife menus when players use the buyammo1/buyammo2 commands.");
 
 	AutoExecConfig(true, "weapons");
 	
@@ -180,6 +181,16 @@ public Action CommandWeaponSkins(int client, int args)
 {
 	if (IsValidClient(client))
 	{
+		// Allow disabling the buyammo1/buyammo2 commands.
+		if (!g_bUseBuyAmmoCommands)
+		{
+			char sCommand[16];
+			GetCmdArg(0, sCommand, sizeof(sCommand));
+
+			if (StrEqual(command, "buyammo1"))
+				return Plugin_Handled;
+		}
+
 		int menuTime;
 		if((menuTime = GetRemainingGracePeriodSeconds(client)) >= 0)
 		{
@@ -208,6 +219,16 @@ public Action CommandKnife(int client, int args)
 {
 	if (IsValidClient(client))
 	{
+		// Allow disabling the buyammo1/buyammo2 commands.
+		if (!g_bUseBuyAmmoCommands)
+		{
+			char sCommand[16];
+			GetCmdArg(0, sCommand, sizeof(sCommand));
+
+			if (StrEqual(command, "buyammo1"))
+				return Plugin_Handled;
+		}
+
 		int menuTime;
 		if((menuTime = GetRemainingGracePeriodSeconds(client)) >= 0)
 		{

@@ -49,6 +49,7 @@ public void OnConfigsExecuted()
 	g_bOverwriteEnabled = g_Cvar_EnableWeaponOverwrite.BoolValue;
 	g_iGracePeriod = g_Cvar_GracePeriod.IntValue;
 	g_bAnySkinAnyWeapon = g_Cvar_AnySkinAnyWeapon.BoolValue;
+	g_bUseBuyAmmoCommands = g_Cvar_UseBuyAmmoCommands.BoolValue;
 	if(g_iGracePeriod > 0)
 	{
 		HookEvent("round_start", OnRoundStart, EventHookMode_PostNoCopy);
